@@ -5,8 +5,8 @@
 # This Source Code Form is "Incompatible With Secondary Licenses", as
 # defined by the Mozilla Public License, v. 2.0.
 
-package Bugzilla::BugUrl::Gerrit;
-
+package Bugzilla::Extension::GitGerritBugUrl::cGit;
+use 5.10.1;
 use strict;
 use warnings;
 
@@ -19,10 +19,10 @@ use parent qw(Bugzilla::BugUrl);
 sub should_handle {
     my ($class, $uri) = @_;
 
-    # Gerrit Change URL: https://git.eclipse.org/r/#/c/26613/
-    # Gerrit Change URL, specific patch set: https://git.eclipse.org/r/#/c/26613/4
-    return ($uri->path =~ m|^/r/$|
-                and $uri->fragment =~ m|^/c/\d+|) ? 1 : 0;
+    # cGit commit: http://git.eclipse.org/c/actf/org.eclipse.actf.ai.git/commit/?id=84a2bb1e7c58fc8f423724d72cf294fd95f9b1c5
+    # cGit commit: https://polarsys.org/cgit/cgit.cgi/capella/capella.git/commit/?id=98011c093f70730bbc9b2113a007aad14a11bb46
+    return ($uri->path =~ m|^/c(git/cgit\.cgi)?/.*commit/$|
+                and $uri->query_param('id') =~ m|^\w{40}$|) ? 1 : 0;
 }
 
 sub _check_value {
@@ -30,11 +30,8 @@ sub _check_value {
 
     $uri = $class->SUPER::_check_value($uri);
 
-    # While Gerrit URLs can be either HTTP or HTTPS,
-    # always go with the HTTP scheme, as that's the default.
-    if ($uri->scheme eq 'http') {
-        $uri->scheme('https');
-    }
+    # GitHub HTTP URLs redirect to HTTPS, so just use the HTTPS scheme.
+    $uri->scheme('https');
 
     return $uri;
 }
