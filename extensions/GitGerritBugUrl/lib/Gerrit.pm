@@ -22,8 +22,9 @@ sub should_handle {
 
     # Gerrit Change URL: https://git.eclipse.org/r/#/c/26613/
     # Gerrit Change URL, specific patch set: https://git.eclipse.org/r/#/c/26613/4
-    return ($uri->path =~ m|^/r/$|
-                and $uri->fragment =~ m|^/c/\d+|) ? 1 : 0;
+    # https://git.eclipse.org/r/40031
+    return ( ($uri->path =~ m|^/r/$| and $uri->fragment =~ m|^/c/\d+|) ||
+                $uri->path =~ m|^/r/\d+|) ? 1 : 0;
 }
 
 sub _check_value {
