@@ -236,10 +236,10 @@
   [% IF bug_url.isa('Bugzilla::BugUrl::Bugzilla::Local') %]
     <img src="//dev.eclipse.org/images/bugs-16x16.png"> [% bug_url.target_bug_id FILTER bug_link(bug_url.target_bug_id, use_alias => 1) FILTER none %]
   [% ELSE %]
-    [% IF bug_url.name.match('git.eclipse.org/c/|polarsys.org/cgit') %]
+    [% IF bug_url.name.match('git.eclipse.org/c/|git.polarsys.org/c/') %]
       <img src="//dev.eclipse.org/images/git-16x16.png"> <a href="[% bug_url.name FILTER html %]">
         Git Commit</a>
-    [% ELSIF bug_url.name.match('git.eclipse.org/r/|polarsys.org/r/') %]
+    [% ELSIF bug_url.name.match('git.eclipse.org/r/|git.polarsys.org/r/') %]
       <img src="//dev.eclipse.org/images/gerrit-16x16.gif"> <a href="[% bug_url.name FILTER html %]">
         Gerrit Change</a>
     [% ELSIF bug_url.name.match('github.com/') %]
