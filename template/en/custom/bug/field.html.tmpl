@@ -242,6 +242,9 @@
     [% ELSIF bug_url.name.match('git.eclipse.org/r/|polarsys.org/r/') %]
       <img src="//dev.eclipse.org/images/gerrit-16x16.gif"> <a href="[% bug_url.name FILTER html %]">
         Gerrit Change</a>
+    [% ELSIF bug_url.name.match('github.com/') %]
+      <img src="//dev.eclipse.org/images/github-16x16.png"> <a href="[% bug_url.name FILTER html %]">
+        Pull Request</a>
     [% ELSE %]
       <img src="//dev.eclipse.org/images/bugs-16x16.png"> <a href="[% bug_url.name FILTER html %]">
         [% bug_url.name FILTER html %]</a>
